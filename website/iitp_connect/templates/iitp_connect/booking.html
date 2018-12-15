@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}  IITP_Inventory {% endblock %}   </title>
+        <!--loads the path to static files-->
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{%  static 'iitp_connect/iitp.ico' %}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css' >
+    <link rel="stylesheet" type="text/css" href="{% static 'iitp_connect/styles.css' %}"   />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'iitp_connect/style_image.css' %}" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- <script src="{% static 'iitp_connect/modal.js' %}"></script>   -->
+</head>
+<body>
+    <!-- <div class="modal myModal">
+
+          The Close Button -->
+          <span class="close">&times;</span>
+
+          <!-- Modal Content (The Image)
+          <img class="modal-content img01" >
+
+    </div>  -->
+
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar" >
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'iitp_connect:index' %}"> IITP_CONNECT</a>
+        </div>
+
+
+        <div class="collapse navbar-collapse" id="topNavBar">
+
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:logout_user' %}">
+                        <span class="glyphicon glyphicon-off"></span>&nbsp; Logout
+                    </a>
+                 </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:detail' %}">
+                        Profile
+                    </a>
+                 </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:about' %}">
+                        About
+                    </a>
+                 </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+</body>
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Source</th>
+                            <th>Destination</th>
+                            <th>Date:Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% if bookings %}
+                            {% for book in bookings %}
+                                <tr>
+                                    <td>{{ book.source }}</td>
+                                    <td>{{ book.destination }}</td>
+                                    <td>
+                                        <a href ="" class="badge badge-success">{{ book.date_time }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'iitp_connect:update_book_status' book.id %}">
+                                            {% ifequal book.book_status 'Booked' %}
+                                                <input class="btn btn-success" type="submit" value="Booked">
+                                            {% else %}
+                                                <input class="btn btn-primary" type="submit" value="Unbooked">
+                                            {% endifequal %}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href ="{% url 'iitp_connect:booking_edit' book.id %}" class="badge badge-success">Edit</a>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+</html>
+
