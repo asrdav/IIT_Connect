@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}  IITP_Inventory {% endblock %}   </title>
+        <!--loads the path to static files-->
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{%  static 'iitp_connect/iitp.ico' %}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css' >
+    <link rel="stylesheet" type="text/css" href="{% static 'iitp_connect/styles.css' %}"   />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'iitp_connect/style_image.css' %}" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- <script src="{% static 'iitp_connect/modal.js' %}"></script>   -->
+</head>
+<body>
+    <!-- <div class="modal myModal">
+
+          The Close Button
+          <span class="close">&times;</span>
+
+          Modal Content (The Image)
+          <img class="modal-content img01" >
+
+    </div>  -->
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar" >
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'iitp_connect:index' %}">IITP_CONNECT</a>
+        </div>
+
+
+        <div class="collapse navbar-collapse" id="topNavBar">
+
+            {% if user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:logout_user' %}">
+                            <span class="glyphicon glyphicon-off"></span>&nbsp; Logout
+                        </a>
+                     </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:detail' %}">
+                            Profile
+                        </a>
+                     </li>
+                </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:login_user' %}">
+                            Login
+                        </a>
+                     </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:register' %}">
+                            Register
+                        </a>
+                     </li>
+                </ul>
+            {% endif %}
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:about' %}">
+                        About
+                    </a>
+                 </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+</body>
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+         <div class="col-sm-12 col-md-12 justify-content-center text-center ">
+            <div class="panel panel-default" style="background-color:grey; color:white;">
+                <div style="width:50%; margin:auto;">
+                    <div class="panel-body" >
+                        <ul class="list-unstyled">
+                        <h3 style="font-family:'Satisfy',cursive;">Item Name</h3>
+                        <li>{{ item.item_name}}</li>
+
+                        <h3 style="font-family:'Satisfy',cursive;">Item Description</h3>
+                        <li>{{ item.item_description}}</li>
+
+                        <h3 style="font-family:'Satisfy',cursive;">Item Tag</h3>
+                        <li><a href ="" class="badge badge-success">{{ item.item_tag}}</a></li>
+
+                        <h3 style="font-family:'Satisfy',cursive;">Item Status</h3>
+                        <li><a href ="" class="badge badge-success">{{ item.item_status}}</a></li>
+                        </ul>
+
+                        <h3 style="font-family:'Satisfy',cursive;">Item Image</h3>
+                        <img id="myImg"  width="300" height="300" class="avatar img-thumbnail check" src="{{item.item_pic.url}}" alt="avatar">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+</html>
