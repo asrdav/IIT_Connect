@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}  IITP_Inventory {% endblock %}   </title>
+        <!--loads the path to static files-->
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{%  static 'iitp_connect/iitp.ico' %}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css' >
+    <link rel="stylesheet" type="text/css" href="{% static 'iitp_connect/styles_index.css' %}"   />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,600,700');
+
+body{
+    background: #5b458f !important;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+h3{
+     font-family: 'Josefin Sans', sans-serif;
+}
+
+.box{
+    padding:60px 0px;
+}
+
+.box-part{
+    background:#FFF;
+    border-radius:10px;
+    padding:60px 10px;
+    margin:30px 0px;
+}
+
+.box-part:hover{
+    background:#4183D7;
+}
+
+.box-part:hover .fa ,
+.box-part:hover .title ,
+.box-part:hover .text ,
+.box-part:hover a{
+    color:#FFF;
+    -webkit-transition: all 1s ease-out;
+    -moz-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+}
+
+.text{
+    margin:20px 0px;
+}
+
+.fa{
+     color:#4183D7;
+}
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar" >
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'iitp_connect:index' %}">IITP_CONNECT</a>
+        </div>
+
+
+        <div class="collapse navbar-collapse" id="topNavBar">
+
+            {% if user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:logout_user' %}">
+                            <span class="glyphicon glyphicon-off"></span>&nbsp; Logout
+                        </a>
+                     </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:detail' %}">
+                            Profile
+                        </a>
+                     </li>
+                </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:login_user' %}">
+                            Login
+                        </a>
+                     </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:register' %}">
+                            Register
+                        </a>
+                     </li>
+                </ul>
+            {% endif %}
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:about' %}">
+                        About
+                    </a>
+                 </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+</body>
+{% block body %}
+<div class="container-fluid">
+
+    <div class="box">
+    <div class="container">
+     	<div class="row">
+
+			    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+					<div class="box-part text-center">
+
+                        <i class="fa fa-behance fa-3x" aria-hidden="true"></i>
+
+						<div class="title">
+							<h3>Lost/Found</h3>
+						</div>
+
+						<div class="text">
+							<span>One can easily find their items and feed their lost items.</span>
+						</div>
+
+						<a href="{% url 'iitp_connect:lost_found' %}" class="btn btn-primary btn-sm" role="button">Lost/Found</a>
+
+					 </div>
+				</div>
+
+				 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+					<div class="box-part text-center">
+
+					    <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
+
+						<div class="title">
+							<h3>Buying/Selling</h3>
+						</div>
+
+						<div class="text">
+							<span>One can easily sell their items and buy the items that are being sold.</span>
+						</div>
+
+						<a href="{% url 'iitp_connect:buy_sell' %}" class="btn btn-primary btn-sm" role="button">Buying/Selling</a>
+
+					 </div>
+				</div>
+
+				 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+					<div class="box-part text-center">
+
+                        <i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
+
+						<div class="title">
+							<h3>CabShare</h3>
+						</div>
+
+						<div class="text">
+							<span>One can book cab seats and make their travel life easy.</span>
+						</div>
+
+                        <a href="{% url 'iitp_connect:cab_share' curr_y curr_m %}" class="btn btn-primary btn-sm" role="button">Cabshare</a>
+
+					 </div>
+				</div>
+		</div>
+    </div>
+</div>
+    {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+
+</div>
+
+{% endblock %}
+</html>
+
