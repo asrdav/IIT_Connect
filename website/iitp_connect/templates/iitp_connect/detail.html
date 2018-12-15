@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}  IITP_Inventory {% endblock %}   </title>
+        <!--loads the path to static files-->
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{%  static 'iitp_connect/iitp.ico' %}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css' >
+    <link rel="stylesheet" type="text/css" href="{% static 'iitp_connect/styles.css' %}"   />
+
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'iitp_connect/style_image.css' %}" />-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!--<script src="{% static 'iitp_connect/modal.js' %}"></script>-->
+</head>
+<body>
+    <!-- <div class="modal myModal">
+
+          The Close Button -->
+          <span class="close">&times;</span>
+
+          <!-- Modal Content (The Image)
+          <img class="modal-content img01" >
+
+    </div>  -->
+
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar" >
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'iitp_connect:index' %}"> IITP_CONNECT</a>
+        </div>
+
+
+        <div class="collapse navbar-collapse" id="topNavBar">
+
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:logout_user' %}">
+                        <span class="glyphicon glyphicon-off"></span>&nbsp; Logout
+                    </a>
+                 </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:detail' %}">
+                        Profile
+                    </a>
+                 </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:about' %}">
+                        About
+                    </a>
+                 </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+</body>
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body" style="background-color:#a6bad5; border:0px;font-family: 'Satisfy',cursive;">
+                    <!--<div class="text-center">-->
+                        <!--{% if document.profile_pic.url %}
+                            <img  width="200" height="200" class="avatar img-thumbnail check" src="{{document.profile_pic.url}}" alt="avatar">
+                        {% else %}  -->
+                        <!--<img id="user-image"  class="user-image" width="200" height="200" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-thumbnail" alt="avatar">-->
+                        <!-- {% endif %}    -->
+                        <!-- <img width="250" height="200" class="avatar img-thumbnail" src="/media/documents/NIKE.jpg" alt="avatar">   -->
+                    <!--</div>-->
+                    <!--<br>-->
+                    <!--<div class="upload-btn-wrapper">-->
+                        <!--<form enctype="multipart/form-data" id="fupForm" class="fupForm">-->
+                            <!--<input type="hidden" id="csrfmiddlewaretoken" value="{{ csrf_token }}">-->
+                            <!--<input type="hidden" id="image-username" type="text" name="image-username" value="{{user.username}}">-->
+                            <!--<input id="profile-image-submit" type="file" name="file" class="inputfile">-->
+                            <!--<button class="btn-upload">Profile image</button>-->
+                        <!--</form>-->
+                    <!--</div>-->
+                    <br>
+                    <br>
+                    <p style="font-size:20px"><strong>Name:</strong> {{ user.username }}</p>
+                    <p style="font-size:20px"><strong>Email:</strong> {{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active" ><a href="{% url 'iitp_connect:create_item' %}">Add New Item</a></li>
+
+                <li role="presentation" class="active" ><a href="{% url 'iitp_connect:cab_service' %}">Cab-Share</a></li>
+                <li role="presentation" class="active" ><a href="{% url 'iitp_connect:booking' %}">Bookings</a></li>
+
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Tag</th>
+                            <th>Image</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                            <th>View</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% if items %}
+                            {% for item in items %}
+                                <tr>
+                                    <td>{{ item.item_name }}</td>
+                                    <td>
+                                        <a href ="" class="badge badge-success">{{ item.item_tag }}</a>
+                                    </td>
+                                    <td>
+                                        <div class="text-left">
+                                            <a href="{{item.item_pic.url}}" target="_blank">
+                                                <img id="myImg"  width="100" height="100" class="avatar img-thumbnail check" src="{{item.item_pic.url}}" alt="avatar">
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="overflow-x: hidden;width: 85px;">
+                                            {{ item.item_description }}<br>...
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'iitp_connect:update_status' item.id %}">
+                                            {% ifequal item.item_status 'Open' %}
+                                                <input class="btn btn-success" type="submit" value="open">
+                                            {% else %}
+                                                <input class="btn btn-primary" type="submit" value="closed">
+                                            {% endifequal %}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href ="{% url 'iitp_connect:item_edit' item.id %}" class="badge badge-success">Edit</a>
+                                    </td>
+                                    <td>
+                                        <a href ="{% url 'iitp_connect:item_view' item.id %}" class="badge badge-success">View</a>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+</html>
+
