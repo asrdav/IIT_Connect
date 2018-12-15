@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}  Items {% endblock %}   </title>
+        <!--loads the path to static files-->
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{%  static 'iitp_connect/iitp.ico' %}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css' >
+    <link rel="stylesheet" type="text/css" href="{% static 'iitp_connect/styles.css' %}"   />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar" >
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'iitp_connect:index' %}"> IITP_CONNECT</a>
+        </div>
+
+
+        <div class="collapse navbar-collapse" id="topNavBar">
+
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:logout_user' %}">
+                        <span class="glyphicon glyphicon-off"></span>&nbsp; Logout
+                    </a>
+                 </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:detail' %}">
+                        Profile
+                    </a>
+                 </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:about' %}">
+                        About
+                    </a>
+                 </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+</body>
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!--
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                        <a href="">
+                            {% if item.item_logo %}
+                                <img src="{{ item.item_logo.url }}" class="img-responsive">
+                            {% else %}
+                            <h3>No image</h3>
+                            {% endif %}
+                        </a>
+                    <h1>{{ item.item_name }} <small>{{ item.item_description }}</small></h1>
+                    <h2>{{ item.item_tag }}</h2>
+                </div>
+            </div>
+        </div>  -->
+
+        <div class="col-sm-8 col-md-9">
+
+            <!--<ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active" ><a href="{% url 'iitp_connect:detail' %}">View All</a></li>
+            </ul>   -->
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Add a New Item</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="item" value="{{ item }}">
+                        {% include 'iitp_connect/form-template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
