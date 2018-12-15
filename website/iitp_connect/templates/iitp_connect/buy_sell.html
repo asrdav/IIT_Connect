@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}  IITP_Inventory {% endblock %}   </title>
+        <!--loads the path to static files-->
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{%  static 'iitp_connect/iitp.ico' %}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css' >
+    <link rel="stylesheet" type="text/css" href="{% static 'iitp_connect/styles_index.css' %}"   />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar" >
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'iitp_connect:index' %}">IITP_CONNECT</a>
+        </div>
+
+
+        <div class="collapse navbar-collapse" id="topNavBar">
+
+            {% if user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:logout_user' %}">
+                            <span class="glyphicon glyphicon-off"></span>&nbsp; Logout
+                        </a>
+                     </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:detail' %}">
+                            Profile
+                        </a>
+                     </li>
+                </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:login_user' %}">
+                            Login
+                        </a>
+                     </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="">
+                        <a href="{% url 'iitp_connect:register' %}">
+                            Register
+                        </a>
+                     </li>
+                </ul>
+            {% endif %}
+
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="">
+                    <a href="{% url 'iitp_connect:about' %}">
+                        About
+                    </a>
+                 </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+</body>
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Image</th>
+                            <th>Description</th>
+                            <th>Tag</th>
+                            <th>View</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% if items %}
+                            {% for item in items %}
+                                {% ifequal item.item_status 'Open' %}
+                                    {% ifequal item.item_tag 'Buy' %}
+                                        <tr>
+                                            <td>{{ item.item_name }}</td>
+                                            <td>
+                                                <div class="text-left">
+                                                    <a href="{{item.item_pic.url}}" target="_blank">
+                                                        <img id="myImg"  width="100" height="100" class="avatar img-thumbnail check" src="{{item.item_pic.url}}" alt="avatar">
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="overflow-x: hidden;width: 85px;">
+                                                    {{ item.item_description }}<br>...
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href ="" class="badge badge-success">{{ item.item_tag }}</a>
+                                            </td>
+                                            <td>
+                                                <a href ="{% url 'iitp_connect:item_general' item.id %}" class="badge badge-success">View</a>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'iitp_connect:claim' item.id %}">
+                                                     <input class="btn btn-success" type="submit" value="Claim">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endifequal %}
+                                    {% ifequal item.item_tag 'Sell' %}
+                                        <tr>
+                                            <td>{{ item.item_name }}</td>
+                                            <td>
+                                                <div class="text-left">
+                                                    <a href="{{item.item_pic.url}}" target="_blank">
+                                                        <img id="myImg"  width="100" height="100" class="avatar img-thumbnail check" src="{{item.item_pic.url}}" alt="avatar">
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="overflow-x: hidden;width: 85px;">
+                                                    {{ item.item_description }}<br>...
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href ="" class="badge badge-success">{{ item.item_tag }}</a>
+                                            </td>
+                                            <td>
+                                                <a href ="{% url 'iitp_connect:item_general' item.id %}" class="badge badge-success">View</a>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'iitp_connect:claim' item.id %}">
+                                                     <input class="btn btn-success" type="submit" value="Claim">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endifequal %}
+                                {% endifequal %}
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+</html>
