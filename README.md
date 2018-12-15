@@ -1,2 +1,2 @@
 # IIT_Patna_Connect
-Helps in finding lost items, selling items and books cab easily.
+IIT Patna portal-cum-database that will help in finding lost items, selling items and will books cab easily.
