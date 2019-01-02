@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from calendar import monthrange
 from datetime import datetime
-
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 
