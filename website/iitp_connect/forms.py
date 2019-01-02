@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import Item, CabService
 
-
 # class DocumentForm(forms.ModelForm):
 #     class Meta:
 #         model = Document
