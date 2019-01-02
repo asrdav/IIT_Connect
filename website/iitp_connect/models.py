@@ -10,7 +10,6 @@ from datetime import date
 from django.utils import timezone
 from django.shortcuts import redirect
 
-
 def upl(instance, filename):
     return 'images/%s/%s' % (instance.user.user.username, filename)
 
